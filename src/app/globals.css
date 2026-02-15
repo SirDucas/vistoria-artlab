@@ -3,11 +3,41 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  --background: #fffcf9;
+  --foreground: #1e293b;
 }
 
-body {
-  @apply bg-background text-text antialiased;
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-glass;
+  }
+
+  .btn-primary {
+    @apply rounded-full bg-primary px-6 py-3 font-semibold text-white transition-all hover:scale-105 active:scale-95 shadow-soft hover:shadow-soft-lg;
+  }
+
+  .btn-secondary {
+    @apply rounded-full bg-secondary px-6 py-3 font-semibold text-white transition-all hover:scale-105 active:scale-95 shadow-soft hover:shadow-soft-lg;
+  }
+  
+  .btn-accent {
+    @apply rounded-full bg-accent px-6 py-3 font-semibold text-white transition-all hover:scale-105 active:scale-95 shadow-soft hover:shadow-soft-lg;
+  }
+
+  .card-art {
+    @apply rounded-soft bg-white shadow-soft transition-all hover:shadow-soft-lg hover:-translate-y-1;
+  }
+}
+
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 input, textarea, select, button {

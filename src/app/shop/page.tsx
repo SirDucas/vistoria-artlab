@@ -1,7 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import { ProductCard } from '@/components/shop/product-card';
+import { Search, SlidersHorizontal } from 'lucide-react';
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 12;
 
 export default async function ShopPage({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
   const category = String(searchParams.category || '');
@@ -28,37 +29,118 @@ export default async function ShopPage({ searchParams }: { searchParams: Record<
     prisma.product.count({ where })
   ]);
 
+  const categories = await prisma.product.findMany({ select: { category: true }, distinct: ['category'] });
+
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Shop</h1>
-      <form className="grid gap-3 rounded-soft bg-white p-4 shadow-soft md:grid-cols-6">
-        <input name="q" placeholder="Cerca" defaultValue={q} className="rounded border p-2" />
-        <input name="category" placeholder="Categoria" defaultValue={category} className="rounded border p-2" />
-        <input name="tag" placeholder="Tag" defaultValue={tag} className="rounded border p-2" />
-        <input name="min" type="number" placeholder="Prezzo min" defaultValue={min || ''} className="rounded border p-2" />
-        <input name="max" type="number" placeholder="Prezzo max" defaultValue={max === 999999 ? '' : max} className="rounded border p-2" />
-        <select name="sort" defaultValue={sort} className="rounded border p-2">
-          <option value="new">Novità</option>
-          <option value="price_asc">Prezzo crescente</option>
-          <option value="price_desc">Prezzo decrescente</option>
-        </select>
-        <select name="availability" defaultValue={availability} className="rounded border p-2">
-          <option value="">Disponibilità</option>
-          <option value="IN_STOCK">In stock</option>
-          <option value="MADE_TO_ORDER">Made to order</option>
-          <option value="SOLD_OUT">Sold out</option>
-        </select>
-        <button className="rounded bg-primary px-4 py-2 font-semibold text-white">Filtra</button>
-      </form>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {products.map((product) => <ProductCard key={product.id} product={product} />)}
-      </div>
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-500">{total} prodotti</p>
-        <div className="flex gap-2">
-          {page > 1 ? <a href={`?page=${page - 1}`} className="rounded border px-3 py-1">Prev</a> : null}
-          {page * PAGE_SIZE < total ? <a href={`?page=${page + 1}`} className="rounded border px-3 py-1">Next</a> : null}
-        </div>
+    <div className="space-y-12 pb-20">
+      <header className="space-y-4">
+        <h1 className="text-5xl font-black tracking-tight">Galleria</h1>
+        <p className="text-lg text-gray-500">Esplora la nostra collezione accuratamente selezionata.</p>
+      </header>
+
+      <div className="flex flex-col gap-10 lg:flex-row">
+        {/* Filters Sidebar */}
+        <aside className="w-full shrink-0 space-y-8 lg:w-64">
+          <form className="space-y-8">
+            <div className="space-y-4">
+              <h3 className="flex items-center gap-2 font-bold uppercase tracking-widest text-xs">
+                <Search size={14} /> Cerca
+              </h3>
+              <input
+                name="q"
+                placeholder="Cerca un'opera..."
+                defaultValue={q}
+                className="w-full rounded-xl border-border bg-white px-4 py-2 shadow-sm focus:border-primary focus:ring-1 focus:ring-primary"
+              />
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="flex items-center gap-2 font-bold uppercase tracking-widest text-xs">
+                <SlidersHorizontal size={14} /> Filtri
+              </h3>
+
+              <div className="space-y-2">
+                <p className="text-sm font-semibold">Categoria</p>
+                <select name="category" defaultValue={category} className="w-full rounded-xl border-border bg-white px-4 py-2 shadow-sm focus:border-primary focus:ring-1 focus:ring-primary">
+                  <option value="">Tutte</option>
+                  {categories.map((c) => (
+                    <option key={c.category} value={c.category}>{c.category}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <p className="text-sm font-semibold">Prezzo (EUR)</p>
+                <div className="flex gap-2">
+                  <input name="min" type="number" placeholder="Min" defaultValue={min || ''} className="w-full rounded-xl border-border bg-white px-4 py-2 shadow-sm" />
+                  <input name="max" type="number" placeholder="Max" defaultValue={max === 999999 ? '' : max} className="w-full rounded-xl border-border bg-white px-4 py-2 shadow-sm" />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <p className="text-sm font-semibold">Ordina per</p>
+                <select name="sort" defaultValue={sort} className="w-full rounded-xl border-border bg-white px-4 py-2 shadow-sm focus:border-primary focus:ring-1 focus:ring-primary">
+                  <option value="new">Novità</option>
+                  <option value="price_asc">Prezzo crescente</option>
+                  <option value="price_desc">Prezzo decrescente</option>
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <p className="text-sm font-semibold">Disponibilità</p>
+                <select name="availability" defaultValue={availability} className="w-full rounded-xl border-border bg-white px-4 py-2 shadow-sm focus:border-primary focus:ring-1 focus:ring-primary">
+                  <option value="">Tutte</option>
+                  <option value="IN_STOCK">In stock</option>
+                  <option value="MADE_TO_ORDER">Made to order</option>
+                  <option value="SOLD_OUT">Sold out</option>
+                </select>
+              </div>
+            </div>
+
+            <button className="btn-primary w-full">Applica Filtri</button>
+            {Object.keys(searchParams).length > 0 && (
+              <a href="/shop" className="block text-center text-sm font-bold text-gray-500 hover:text-primary">
+                Resetta tutto
+              </a>
+            )}
+          </form>
+        </aside>
+
+        {/* Product Grid */}
+        <main className="flex-1 space-y-12">
+          {products.length > 0 ? (
+            <>
+              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {products.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+
+              {/* Pagination */}
+              <div className="flex items-center justify-between border-t pt-8">
+                <p className="text-sm font-medium text-gray-500">Mostrando {products.length} di {total} opere</p>
+                <div className="flex gap-2">
+                  {page > 1 ? (
+                    <a href={`?page=${page - 1}`} className="rounded-full border px-6 py-2 font-bold transition hover:bg-muted">
+                      Indietro
+                    </a>
+                  ) : null}
+                  {page * PAGE_SIZE < total ? (
+                    <a href={`?page=${page + 1}`} className="btn-secondary px-6 py-2">
+                      Avanti
+                    </a>
+                  ) : null}
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="flex h-96 flex-col items-center justify-center rounded-soft-xl bg-muted p-12 text-center">
+              <Search className="mb-4 text-gray-300" size={48} />
+              <h3 className="text-2xl font-bold">Nessun risultato</h3>
+              <p className="mt-2 text-gray-500">Prova a cambiare i filtri o la ricerca.</p>
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );

@@ -1,12 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, Menu, X } from 'lucide-react';
 import { useCart } from '@/context/cart-store';
 import { formatPrice } from '@/lib/utils';
+import { useState } from 'react';
 
 export function Header() {
   const { items, removeItem, setQuantity, total } = useCart();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   async function checkout() {
     const response = await fetch('/api/stripe/create-checkout-session', {
@@ -19,36 +21,83 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-20 border-b border-primary/10 bg-white/90 backdrop-blur">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        <Link href="/" className="text-2xl font-bold text-primary">Vistoria ArtLab</Link>
-        <div className="flex items-center gap-6">
-          <Link href="/shop">Shop</Link>
-          <Link href="/about">About</Link>
-          <Link href="/contact">Contact</Link>
-          <details className="relative">
-            <summary className="flex cursor-pointer items-center gap-2 rounded-full bg-sky px-3 py-2 text-sm font-semibold text-text">
-              <ShoppingBag size={16} /> {items.length}
+    <header className="glass sticky top-0 z-50">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <Link href="/" className="text-2xl font-black tracking-tighter text-primary">
+          Vistoria <span className="text-secondary">ArtLab</span>
+        </Link>
+
+        {/* Desktop Nav */}
+        <div className="hidden items-center gap-8 md:flex">
+          <Link href="/shop" className="font-medium hover:text-primary">Shop</Link>
+          <Link href="/about" className="font-medium hover:text-primary">About</Link>
+          <Link href="/contact" className="font-medium hover:text-primary">Contact</Link>
+
+          <details className="group relative">
+            <summary className="flex cursor-pointer list-none items-center gap-2 rounded-full bg-secondary px-4 py-2 text-sm font-bold text-white transition hover:brightness-110">
+              <ShoppingBag size={18} />
+              <span>{items.reduce((acc, i) => acc + i.quantity, 0)}</span>
             </summary>
-            <div className="absolute right-0 mt-2 w-80 rounded-soft bg-white p-4 shadow-soft">
-              <p className="mb-3 font-semibold">Carrello</p>
-              {items.length === 0 ? <p className="text-sm text-gray-500">Nessun prodotto.</p> : null}
-              {items.map((item) => (
-                <div key={item.productId} className="mb-3 flex items-center justify-between gap-2 text-sm">
-                  <div>
-                    <p>{item.title}</p>
-                    <p className="text-gray-500">{formatPrice(item.priceCents)}</p>
-                  </div>
-                  <input aria-label={`Quantità ${item.title}`} type="number" min={1} value={item.quantity} onChange={(e) => setQuantity(item.productId, Number(e.target.value))} className="w-14 rounded border p-1" />
-                  <button onClick={() => removeItem(item.productId)} className="text-coral">X</button>
+            <div className="absolute right-0 mt-3 w-80 translate-y-2 rounded-soft-xl bg-white p-6 opacity-0 shadow-soft-lg transition-all group-open:translate-y-0 group-open:opacity-100">
+              <h3 className="mb-4 text-lg font-bold">Il tuo carrello</h3>
+              {items.length === 0 ? (
+                <p className="py-4 text-center text-gray-500">Il carrello è vuoto.</p>
+              ) : (
+                <div className="max-h-60 overflow-auto pr-2">
+                  {items.map((item) => (
+                    <div key={item.productId} className="mb-4 flex items-center gap-3">
+                      <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-md border">
+                        <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="truncate font-semibold">{item.title}</p>
+                        <p className="text-xs text-secondary font-bold">{formatPrice(item.priceCents)}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="number"
+                          min={1}
+                          value={item.quantity}
+                          onChange={(e) => setQuantity(item.productId, Number(e.target.value))}
+                          className="w-10 rounded-md border text-center text-sm"
+                        />
+                        <button onClick={() => removeItem(item.productId)} className="text-coral hover:text-red-600">
+                          <X size={16} />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-              <p className="font-semibold">Totale: {formatPrice(total)}</p>
-              {items.length > 0 ? <button onClick={checkout} className="mt-2 w-full rounded-full bg-primary px-4 py-2 text-center text-white">Checkout</button> : null}
+              )}
+              <div className="mt-4 border-t pt-4">
+                <div className="flex justify-between font-bold">
+                  <span>Totale:</span>
+                  <span>{formatPrice(total)}</span>
+                </div>
+                {items.length > 0 && (
+                  <button onClick={checkout} className="btn-primary mt-4 w-full">
+                    Vai al Checkout
+                  </button>
+                )}
+              </div>
             </div>
           </details>
         </div>
+
+        {/* Mobile Menu Toggle */}
+        <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </nav>
+
+      {/* Mobile Nav */}
+      {isMenuOpen && (
+        <div className="glass absolute inset-x-0 top-full flex flex-col gap-4 p-6 md:hidden">
+          <Link href="/shop" onClick={() => setIsMenuOpen(false)} className="text-lg font-semibold">Shop</Link>
+          <Link href="/about" onClick={() => setIsMenuOpen(false)} className="text-lg font-semibold">About</Link>
+          <Link href="/contact" onClick={() => setIsMenuOpen(false)} className="text-lg font-semibold">Contact</Link>
+        </div>
+      )}
     </header>
   );
 }

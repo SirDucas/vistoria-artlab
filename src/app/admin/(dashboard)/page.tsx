@@ -11,7 +11,7 @@ export default async function AdminDashboardPage() {
   const recentOrders = await prisma.order.findMany({
     take: 5,
     orderBy: { createdAt: 'desc' },
-    select: { id: true, totalCents: true, status: true, userEmail: true, createdAt: true }
+    select: { id: true, totalCents: true, status: true, customerEmail: true, createdAt: true }
   });
 
   const stats = [
@@ -59,7 +59,7 @@ export default async function AdminDashboardPage() {
               {recentOrders.map((order) => (
                 <tr key={order.id} className="hover:bg-gray-50/50 transition">
                   <td className="px-6 py-4 font-mono text-gray-400">#{order.id.slice(-8)}</td>
-                  <td className="px-6 py-4 font-bold">{order.userEmail}</td>
+                  <td className="px-6 py-4 font-bold">{order.customerEmail}</td>
                   <td className="px-6 py-4">
                     <span className={`rounded-full px-2 py-1 text-[10px] font-black uppercase tracking-wider ${order.status === 'PAID' ? 'bg-mint/10 text-mint' : 'bg-sun/10 text-sun'}`}>
                       {order.status}

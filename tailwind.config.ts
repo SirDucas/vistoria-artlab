@@ -9,25 +9,25 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: '#fffcf9', // Warm white
-        foreground: '#1e293b', // Slate 800
+        background: '#000000', // True black
+        foreground: '#f8fafc', // Slate 50
         primary: {
-          DEFAULT: '#7c3aed', // Violet 600
+          DEFAULT: '#8b5cf6', // Violet 500 (slightly brighter for dark)
           foreground: '#ffffff',
         },
         secondary: {
-          DEFAULT: '#0ea5e9', // Sky 500
+          DEFAULT: '#38bdf8', // Sky 400 (slightly brighter)
           foreground: '#ffffff',
         },
         accent: {
-          DEFAULT: '#f97316', // Orange 500
+          DEFAULT: '#fb923c', // Orange 400
           foreground: '#ffffff',
         },
         coral: '#fb7185',
         mint: '#34d399',
         sun: '#facc15',
-        muted: '#f1f5f9',
-        border: '#e2e8f0',
+        muted: '#1e293b', // Slate 800
+        border: '#334155', // Slate 700
       },
       boxShadow: {
         soft: '0 10px 30px -10px rgba(0, 0, 0, 0.1)',

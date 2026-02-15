@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth';
+import { auth, signOut } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { LayoutDashboard, ShoppingBag, Users, Settings, LogOut, Package } from 'lucide-react';
@@ -41,7 +41,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <h1 className="text-3xl font-black tracking-tight text-gray-900">Bentornato, {session.user.name}</h1>
           <div className="flex items-center gap-4">
             <Link href="/" target="_blank" className="text-sm font-bold text-gray-500 hover:text-primary">Vedi Sito →</Link>
-            <form action={async () => { 'use client'; /* Logout logic later */ }}>
+            <form action={async () => {
+              'use server';
+              await signOut();
+            }}>
               <button className="flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold hover:bg-gray-100 text-red-500 border-red-100 bg-red-50/50">
                 <LogOut size={16} /> Logout
               </button>

@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { ProductCard } from '@/components/shop/product-card';
-import { Palette, Sparkles, Heart } from 'lucide-react';
+import { Palette, Sparkles, Heart, Package, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 export default async function HomePage() {
   const featured = await prisma.product.findMany({
@@ -12,116 +13,123 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-24 pb-20">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden rounded-soft-xl bg-artistic-gradient p-12 text-white shadow-soft-lg md:p-24">
-        <div className="relative z-10 max-w-2xl space-y-8">
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-bold backdrop-blur-md">
-            <Sparkles size={16} />
-            <span>Studio d'Arte Artigianale</span>
+      <section className="relative overflow-hidden rounded-soft-xl bg-black py-20 lg:py-32">
+        <div className="absolute inset-0 bg-artistic-gradient opacity-10 blur-3xl" />
+        <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-12 text-center lg:flex-row lg:text-left">
+          <div className="flex-1 space-y-8">
+            <div className="inline-block rounded-full bg-primary/10 border border-primary/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-primary">
+              Napoli, Italia
+            </div>
+            <h1 className="text-6xl font-black leading-[1.1] tracking-tighter text-white lg:text-8xl">
+              Dal corpo <br />
+              <span className="bg-artistic-gradient bg-clip-text text-transparent italic">alla materia.</span>
+            </h1>
+            <p className="text-xl font-medium leading-relaxed text-gray-400">
+              Vittoria Laboccetta crea opere su commissione e ti accompagna attraverso il potere trasformativo dell’arteterapia. Nel cuore di Napoli, dove l’arte incontra la cura.
+            </p>
+            <div className="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start">
+              <Link href="/shop" className="btn-primary px-10 py-4 text-lg">Esplora la Galleria</Link>
+              <Link href="/about" className="rounded-full border border-white/10 px-10 py-4 text-lg font-bold transition hover:bg-white/5">La mia storia</Link>
+            </div>
           </div>
-          <h1 className="text-5xl font-black leading-tight tracking-tighter md:text-7xl">
-            L'Arte che <br /> <span className="text-sun">Abita</span> i tuoi spazi.
-          </h1>
-          <p className="text-xl font-medium opacity-90 leading-relaxed md:text-2xl">
-            Piccole opere originali, quadri vibranti e oggettistica d’autore nati nel cuore del colore.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <Link href="/shop" className="btn-secondary text-lg">
-              Esplora la Collezione
-            </Link>
-            <Link href="/about" className="rounded-full border-2 border-white/50 bg-white/10 px-6 py-3 font-bold backdrop-blur-sm transition hover:bg-white hover:text-primary">
-              La nostra Storia
-            </Link>
+          <div className="relative aspect-[4/5] w-full max-w-md flex-1 overflow-hidden rounded-soft-xl shadow-soft-xl lg:max-w-none">
+            <Image
+              src="/photo6.png"
+              alt="Vittoria Laboccetta Lab"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
-        </div>
-        {/* Abstract Shapes */}
-        <div className="absolute -right-20 -top-20 h-96 w-96 rounded-full bg-sun/20 blur-3xl" />
-        <div className="absolute -bottom-20 right-40 h-80 w-80 rounded-full bg-coral/20 blur-3xl" />
-      </section>
-
-      {/* Features Section */}
-      <section className="grid gap-12 md:grid-cols-3">
-        <div className="space-y-4 text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-sun/10 text-sun shadow-sm">
-            <Palette size={32} />
-          </div>
-          <h3 className="text-xl font-bold">Unicità Garantita</h3>
-          <p className="text-gray-500">Ogni pezzo è unico, firmato e corredato di certificato di autenticità.</p>
-        </div>
-        <div className="space-y-4 text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-coral/10 text-coral shadow-sm">
-            <Heart size={32} />
-          </div>
-          <h3 className="text-xl font-bold">Fatto a Mano</h3>
-          <p className="text-gray-500">Lavorazione artigianale con materiali di pregio e amore per il dettaglio.</p>
-        </div>
-        <div className="space-y-4 text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary/10 text-secondary shadow-sm">
-            <Sparkles size={32} />
-          </div>
-          <h3 className="text-xl font-bold">Spedizioni Sicure</h3>
-          <p className="text-gray-500">Imballaggio artistico rinforzato per proteggere la tua opera nel viaggio.</p>
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section>
-        <div className="mb-12 flex flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
-          <div>
-            <h2 className="text-4xl font-black tracking-tight text-foreground">Nuovi Arrivi</h2>
-            <p className="mt-2 text-lg text-gray-500">Scopri le ultime creazioni appena nate in laboratorio.</p>
+      {/* Philosophy Section */}
+      <section className="grid gap-8 py-20 md:grid-cols-2 lg:grid-cols-3">
+        <div className="glass rounded-soft-xl p-10 space-y-4 border border-white/5">
+          <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+            <Package size={24} />
           </div>
-          <Link href="/shop" className="group font-bold text-primary flex items-center gap-2">
-            Vedi tutto lo Shop <span className="transition-transform group-hover:translate-x-1">→</span>
+          <h3 className="text-2xl font-bold">Opere Uniche</h3>
+          <p className="text-gray-400">Ogni creazione è un pezzo unico, nato dall’ispirazione del momento e dalla materia viva.</p>
+        </div>
+        <div className="glass rounded-soft-xl p-10 space-y-4 border border-white/5">
+          <div className="h-12 w-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary">
+            <Palette size={24} />
+          </div>
+          <h3 className="text-2xl font-bold">Commissioni</h3>
+          <p className="text-gray-400">Collaboro con te per dare forma ai tuoi desideri e ai tuoi spazi con opere personalizzate.</p>
+        </div>
+        <div className="glass rounded-soft-xl p-10 space-y-4 border border-white/5">
+          <div className="h-12 w-12 rounded-xl bg-sun/10 flex items-center justify-center text-sun">
+            <Heart size={24} />
+          </div>
+          <h3 className="text-2xl font-bold">Arteterapia</h3>
+          <p className="text-gray-400">Laboratori individuali e di gruppo a Napoli per riscoprire se stessi attraverso il gesto artistico.</p>
+        </div>
+      </section>
+
+      {/* Featured Works Preview */}
+      <section className="space-y-12 py-10">
+        <div className="flex items-end justify-between">
+          <div className="space-y-4">
+            <h2 className="text-4xl font-black tracking-tight text-white">Galleria Recente</h2>
+            <p className="text-gray-400">Le ultime opere nate dalla materia nel laboratorio di Napoli.</p>
+          </div>
+          <Link href="/shop" className="group flex items-center gap-3 text-lg font-bold text-primary transition-colors hover:text-secondary">
+            Vedi tutto <ArrowRight className="transition-transform group-hover:translate-x-2" />
           </Link>
         </div>
 
         {featured.length > 0 ? (
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {featured.map((product) => (
+            {featured.slice(0, 4).map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         ) : (
-          <div className="rounded-soft-xl bg-muted p-20 text-center">
-            <p className="text-xl font-medium text-gray-400">La galleria è temporaneamente vuota. Torna presto!</p>
+          <div className="rounded-soft-xl bg-white/5 border border-white/5 p-20 text-center">
+            <p className="text-xl font-medium text-gray-500 italic">La galleria si sta popolando. Torna presto!</p>
           </div>
         )}
       </section>
 
-      {/* About Preview */}
-      <section className="grid items-center gap-16 md:grid-cols-2">
-        <div className="relative aspect-square overflow-hidden rounded-soft-xl shadow-soft">
-          <img
-            src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800&auto=format&fit=crop"
-            alt="Artista all'opera"
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-8 text-white">
-            <p className="text-sm font-bold uppercase tracking-widest text-sun">Il Laboratorio</p>
-            <p className="text-2xl font-bold">Dove nasce la magia.</p>
+      {/* Studio Banner */}
+      <section className="relative overflow-hidden rounded-soft-xl bg-black py-32 border border-white/5">
+        <Image src="/photo1.png" alt="Studio Background" fill className="object-cover opacity-20 filter grayscale" />
+        <div className="relative mx-auto max-w-3xl text-center space-y-8 px-6">
+          <h2 className="text-5xl font-black text-white">Il Laboratorio è vita.</h2>
+          <p className="text-xl text-gray-400 italic font-medium leading-relaxed">
+            "Nel cuore di Napoli, uno spazio di libertà dove il colore incontra l'emozione e si trasforma in materia tangibile."
+          </p>
+          <div className="pt-8">
+            <Link href="/contact" className="btn-secondary px-12 py-4 text-xl">Prenota una Visita</Link>
           </div>
         </div>
-        <div className="space-y-8">
-          <h2 className="text-4xl font-black tracking-tight">Oltre il Quadro.</h2>
-          <p className="text-xl leading-relaxed text-gray-600">
-            Vistoria ArtLab non è solo un e-commerce, è un viaggio nel colore. Fondato a Milano, il nostro studio esplora il confine tra arte visiva e oggetto quotidiano.
-          </p>
-          <div className="space-y-4">
-            <div className="flex items-center gap-4">
-              <div className="h-2 w-2 rounded-full bg-primary" />
-              <p className="font-semibold text-foreground">Materiali eco-sostenibili e naturali.</p>
+      </section>
+
+      {/* Community / Social Preview */}
+      <section className="rounded-soft-xl bg-white/5 border border-white/5 p-12 lg:p-20 text-center space-y-10">
+        <div className="space-y-4">
+          <h2 className="text-4xl font-black tracking-tight text-white">Segui il Viaggio su Instagram</h2>
+          <p className="text-gray-400 max-w-xl mx-auto italic">"Dal corpo alla materia, ogni giorno un nuovo racconto di trasformazione."</p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="relative aspect-square rounded-2xl overflow-hidden shadow-soft border border-white/10 group">
+              <Image src={`/photo${i + 10}.png`} alt="Studio details" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+              <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-            <div className="flex items-center gap-4">
-              <div className="h-2 w-2 rounded-full bg-secondary" />
-              <p className="font-semibold text-foreground">Supporto diretto agli artisti locali.</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="h-2 w-2 rounded-full bg-coral" />
-              <p className="font-semibold text-foreground">Personalizzazioni su misura.</p>
-            </div>
-          </div>
-          <Link href="/about" className="btn-primary inline-block">Scopri di più su di noi</Link>
+          ))}
+        </div>
+        <div className="pt-6">
+          <a
+            href="https://www.instagram.com/vistoria_art/"
+            target="_blank"
+            className="btn-primary inline-flex items-center gap-3 px-10 py-4 shadow-[0_0_30px_rgba(139,92,246,0.2)]"
+          >
+            <Heart size={20} /> @vistoria_art
+          </a>
         </div>
       </section>
     </div>

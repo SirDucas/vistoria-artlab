@@ -19,12 +19,12 @@ export function ProductCard({ product }: { product: any }) {
           className="object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute left-3 top-3">
-          <span className="rounded-full bg-white/90 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-primary shadow-sm backdrop-blur-sm">
+          <span className="rounded-full bg-black/60 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white shadow-sm backdrop-blur-md border border-white/10">
             {product.type}
           </span>
         </div>
         {product.availability === 'SOLD_OUT' && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-[2px]">
+          <div className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm">
             <span className="rounded-full bg-white px-4 py-2 text-xs font-bold uppercase tracking-widest text-black">
               Sold out
             </span>
@@ -37,14 +37,14 @@ export function ProductCard({ product }: { product: any }) {
           <h3 className="text-lg font-bold leading-tight group-hover:text-primary transition-colors">
             <Link href={`/product/${product.slug}`}>{product.title}</Link>
           </h3>
-          <p className="mt-2 text-sm text-gray-500 line-clamp-2">{product.description}</p>
+          <p className="mt-2 text-sm text-gray-400 line-clamp-2">{product.description}</p>
         </div>
 
         <div className="mt-4 flex items-center justify-between gap-4">
           <span className="text-xl font-black text-secondary">{formatPrice(product.priceCents, product.currency)}</span>
           <button
             disabled={product.availability === 'SOLD_OUT'}
-            className="flex items-center gap-2 rounded-full bg-primary p-3 font-bold text-white transition hover:bg-primary/95 hover:scale-110 active:scale-90 disabled:bg-gray-200 disabled:scale-100 disabled:text-gray-400 shadow-soft"
+            className="flex items-center gap-2 rounded-full bg-primary p-3 font-bold text-white transition hover:bg-primary/80 hover:scale-110 active:scale-95 disabled:bg-white/10 disabled:scale-100 disabled:text-gray-600 shadow-soft"
             onClick={() => addItem({
               productId: product.id,
               slug: product.slug,

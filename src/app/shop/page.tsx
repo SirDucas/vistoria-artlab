@@ -41,65 +41,65 @@ export default async function ShopPage({ searchParams }: { searchParams: Record<
       <div className="flex flex-col gap-10 lg:flex-row">
         {/* Filters Sidebar */}
         <aside className="w-full shrink-0 space-y-8 lg:w-64">
-          <form className="space-y-8">
+          <form className="glass rounded-soft-xl p-8 space-y-8">
             <div className="space-y-4">
-              <h3 className="flex items-center gap-2 font-bold uppercase tracking-widest text-xs">
+              <h3 className="flex items-center gap-2 font-bold uppercase tracking-widest text-xs text-secondary">
                 <Search size={14} /> Cerca
               </h3>
               <input
                 name="q"
                 placeholder="Cerca un'opera..."
                 defaultValue={q}
-                className="w-full rounded-xl border-border bg-white px-4 py-2 shadow-sm focus:border-primary focus:ring-1 focus:ring-primary"
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm shadow-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition"
               />
             </div>
 
             <div className="space-y-4">
-              <h3 className="flex items-center gap-2 font-bold uppercase tracking-widest text-xs">
+              <h3 className="flex items-center gap-2 font-bold uppercase tracking-widest text-xs text-secondary">
                 <SlidersHorizontal size={14} /> Filtri
               </h3>
 
               <div className="space-y-2">
-                <p className="text-sm font-semibold">Categoria</p>
-                <select name="category" defaultValue={category} className="w-full rounded-xl border-border bg-white px-4 py-2 shadow-sm focus:border-primary focus:ring-1 focus:ring-primary">
-                  <option value="">Tutte</option>
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Categoria</p>
+                <select name="category" defaultValue={category} className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm shadow-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none transition">
+                  <option value="" className="bg-black">Tutte</option>
                   {categories.map((c) => (
-                    <option key={c.category} value={c.category}>{c.category}</option>
+                    <option key={c.category} value={c.category} className="bg-black">{c.category}</option>
                   ))}
                 </select>
               </div>
 
               <div className="space-y-2">
-                <p className="text-sm font-semibold">Prezzo (EUR)</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Prezzo (EUR)</p>
                 <div className="flex gap-2">
-                  <input name="min" type="number" placeholder="Min" defaultValue={min || ''} className="w-full rounded-xl border-border bg-white px-4 py-2 shadow-sm" />
-                  <input name="max" type="number" placeholder="Max" defaultValue={max === 999999 ? '' : max} className="w-full rounded-xl border-border bg-white px-4 py-2 shadow-sm" />
+                  <input name="min" type="number" placeholder="Min" defaultValue={min || ''} className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm shadow-sm focus:border-primary outline-none transition" />
+                  <input name="max" type="number" placeholder="Max" defaultValue={max === 999999 ? '' : max} className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm shadow-sm focus:border-primary outline-none transition" />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <p className="text-sm font-semibold">Ordina per</p>
-                <select name="sort" defaultValue={sort} className="w-full rounded-xl border-border bg-white px-4 py-2 shadow-sm focus:border-primary focus:ring-1 focus:ring-primary">
-                  <option value="new">Novità</option>
-                  <option value="price_asc">Prezzo crescente</option>
-                  <option value="price_desc">Prezzo decrescente</option>
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Ordina per</p>
+                <select name="sort" defaultValue={sort} className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm shadow-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none transition">
+                  <option value="new" className="bg-black">Novità</option>
+                  <option value="price_asc" className="bg-black">Prezzo crescente</option>
+                  <option value="price_desc" className="bg-black">Prezzo decrescente</option>
                 </select>
               </div>
 
               <div className="space-y-2">
-                <p className="text-sm font-semibold">Disponibilità</p>
-                <select name="availability" defaultValue={availability} className="w-full rounded-xl border-border bg-white px-4 py-2 shadow-sm focus:border-primary focus:ring-1 focus:ring-primary">
-                  <option value="">Tutte</option>
-                  <option value="IN_STOCK">In stock</option>
-                  <option value="MADE_TO_ORDER">Made to order</option>
-                  <option value="SOLD_OUT">Sold out</option>
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Disponibilità</p>
+                <select name="availability" defaultValue={availability} className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm shadow-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none transition">
+                  <option value="" className="bg-black">Tutte</option>
+                  <option value="IN_STOCK" className="bg-black">In stock</option>
+                  <option value="MADE_TO_ORDER" className="bg-black">Made to order</option>
+                  <option value="SOLD_OUT" className="bg-black">Sold out</option>
                 </select>
               </div>
             </div>
 
             <button className="btn-primary w-full">Applica Filtri</button>
             {Object.keys(searchParams).length > 0 && (
-              <a href="/shop" className="block text-center text-sm font-bold text-gray-500 hover:text-primary">
+              <a href="/shop" className="block text-center text-sm font-bold text-gray-500 hover:text-coral transition-colors">
                 Resetta tutto
               </a>
             )}
@@ -117,11 +117,11 @@ export default async function ShopPage({ searchParams }: { searchParams: Record<
               </div>
 
               {/* Pagination */}
-              <div className="flex items-center justify-between border-t pt-8">
+              <div className="flex items-center justify-between border-t border-white/10 pt-8">
                 <p className="text-sm font-medium text-gray-500">Mostrando {products.length} di {total} opere</p>
                 <div className="flex gap-2">
                   {page > 1 ? (
-                    <a href={`?page=${page - 1}`} className="rounded-full border px-6 py-2 font-bold transition hover:bg-muted">
+                    <a href={`?page=${page - 1}`} className="rounded-full border border-white/10 px-6 py-2 font-bold transition hover:bg-white/5">
                       Indietro
                     </a>
                   ) : null}
@@ -134,8 +134,8 @@ export default async function ShopPage({ searchParams }: { searchParams: Record<
               </div>
             </>
           ) : (
-            <div className="flex h-96 flex-col items-center justify-center rounded-soft-xl bg-muted p-12 text-center">
-              <Search className="mb-4 text-gray-300" size={48} />
+            <div className="flex h-96 flex-col items-center justify-center rounded-soft-xl bg-white/5 border border-white/5 p-12 text-center">
+              <Search className="mb-4 text-white/10" size={48} />
               <h3 className="text-2xl font-bold">Nessun risultato</h3>
               <p className="mt-2 text-gray-500">Prova a cambiare i filtri o la ricerca.</p>
             </div>

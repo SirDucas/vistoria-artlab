@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #fffcf9;
-  --foreground: #1e293b;
+  --background: #000000;
+  --foreground: #f8fafc;
 }
 
 @layer base {
@@ -16,15 +16,15 @@
 
 @layer components {
   .glass {
-    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-glass;
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-glass;
   }
 
   .btn-primary {
-    @apply rounded-full bg-primary px-6 py-3 font-semibold text-white transition-all hover:scale-105 active:scale-95 shadow-soft hover:shadow-soft-lg;
+    @apply rounded-full bg-primary px-6 py-3 font-semibold text-white transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)];
   }
 
   .btn-secondary {
-    @apply rounded-full bg-secondary px-6 py-3 font-semibold text-white transition-all hover:scale-105 active:scale-95 shadow-soft hover:shadow-soft-lg;
+    @apply rounded-full bg-secondary px-6 py-3 font-semibold text-white transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(56,189,248,0.3)] hover:shadow-[0_0_30px_rgba(56,189,248,0.5)];
   }
   
   .btn-accent {
@@ -32,7 +32,7 @@
   }
 
   .card-art {
-    @apply rounded-soft bg-white shadow-soft transition-all hover:shadow-soft-lg hover:-translate-y-1;
+    @apply rounded-soft-xl bg-white/5 border border-white/10 shadow-soft transition-all hover:bg-white/10 hover:-translate-y-1;
   }
 }
 

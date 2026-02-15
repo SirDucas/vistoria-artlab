@@ -1,62 +1,88 @@
-import { prisma } from '@/lib/prisma';
-import { Mail, MapPin, Instagram, Facebook } from 'lucide-react';
+import { Mail, MapPin, Instagram, Facebook, Sparkles, Palette, Heart } from 'lucide-react';
+import Image from 'next/image';
 
 export default async function AboutPage() {
-  const content = await prisma.siteContent.findUnique({ where: { key: 'about' } });
-
   return (
     <div className="space-y-24 pb-20">
-      <section className="relative h-[60vh] overflow-hidden rounded-soft-xl shadow-soft">
-        <img
-          src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=1600&auto=format&fit=crop"
-          alt="L'artista al lavoro"
-          className="h-full w-full object-cover"
+      {/* Hero / Intro */}
+      <section className="relative h-[70vh] overflow-hidden rounded-soft-xl shadow-soft">
+        <Image
+          src="/photo1.png"
+          alt="Vittoria Laboccetta nel suo studio"
+          fill
+          className="object-cover"
+          priority
         />
-        <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" />
-        <div className="absolute inset-0 flex items-center justify-center text-center text-white">
-          <div className="max-w-3xl space-y-6 p-6">
-            <h1 className="text-6xl font-black tracking-tighter md:text-8xl">La nostra <span className="text-sun">Visione</span>.</h1>
-            <p className="text-xl font-medium opacity-90 md:text-2xl">Oltre la tecnica, cerchiamo l'anima del colore.</p>
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 flex items-center justify-center text-center text-white p-6">
+          <div className="max-w-3xl space-y-6">
+            <h1 className="text-6xl font-black tracking-tighter md:text-8xl">La mia <span className="text-sun">Storia</span>.</h1>
+            <p className="text-xl font-medium opacity-90 md:text-2xl italic">"Dal corpo alla materia, ogni creazione è un respiro."</p>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-4xl space-y-12">
-        <div className="prose prose-xl prose-slate max-w-none leading-relaxed text-gray-600">
-          <p className="font-bold text-primary">Vistoria ArtLab nasce da una passione viscerale per l'artigianalità milanese e l'esplorazione del colore puro.</p>
-          <p>{content?.body || "In un mondo sempre più digitale, crediamo nel potere tattile dell'arte. Ogni nostra opera è una conversazione tra artista e materia, un frammento di emozione catturato su tela o plasmato nella ceramica. Il nostro studio a Milano è un laboratorio di idee dove la tradizione incontra la giocosità moderna."}</p>
+      {/* Bio & Philosophy */}
+      <section className="mx-auto max-w-4xl space-y-16 px-6">
+        <div className="prose prose-xl prose-invert max-w-none leading-relaxed text-gray-400">
+          <h2 className="text-4xl font-black text-white tracking-tight mb-8">Vittoria Laboccetta</h2>
+          <p className="font-bold text-primary text-2xl">
+            Artista e Arteterapeuta radicata nel calore creativo di Napoli.
+          </p>
+          <p>
+            Vistoria ArtLab è il punto d'incontro tra il mio percorso personale e la materia che prende vita. Nel mio laboratorio a Napoli, esploro il confine tra arte visiva e benessere interiore. La mia filosofia, **"dal corpo alla materia"**, nasce dalla convinzione che ogni gesto creativo sia un'estensione del nostro essere, un modo per dare forma a ciò che spesso non ha parole.
+          </p>
+          <p>
+            Oltre alla creazione di opere originali e oggetti d'arte su commissione, dedico una parte fondamentale della mia attività all'**arteterapia**. Accompagno le persone in percorsi di riscoperta attraverso l'uso consapevole del colore e dei materiali, trasformando l'atto del creare in un momento di cura e ascolto profondo.
+          </p>
         </div>
 
+        {/* Core Values */}
         <div className="grid gap-8 md:grid-cols-2">
-          <div className="rounded-soft-xl bg-sun/10 p-8 space-y-4">
-            <h3 className="text-2xl font-bold">L'Inspiration</h3>
-            <p className="text-gray-600">Le nostre ispirazioni arrivano dalla vivacità urbana, dai mercati di Brera e dalla luce che filtra dai cortili nascosti di Milano.</p>
+          <div className="glass rounded-soft-xl p-10 space-y-4 border border-white/5">
+            <Sparkles className="text-sun" size={32} />
+            <h3 className="text-2xl font-bold">L'Arteterapia</h3>
+            <p className="text-gray-400">Non si tratta di saper dipingere, ma di lasciarsi fluire. I miei laboratori a Napoli sono spazi sicuri dove la creatività diventa medicina per l'anima.</p>
           </div>
-          <div className="rounded-soft-xl bg-coral/10 p-8 space-y-4">
-            <h3 className="text-2xl font-bold">La Qualità</h3>
-            <p className="text-gray-600">Utilizziamo solo pigmenti di altissima qualità e supporti preparati a mano per garantire che l'opera duri nel tempo.</p>
+          <div className="glass rounded-soft-xl p-10 space-y-4 border border-white/5">
+            <Palette className="text-coral" size={32} />
+            <h3 className="text-2xl font-bold">Materia su Misura</h3>
+            <p className="text-gray-400">Ogni opera su commissione è un dialogo. Ascolto le tue storie per tradurle in colori e forme che possano abitare i tuoi spazi con intenzione.</p>
           </div>
         </div>
       </section>
 
-      <section className="flex flex-col items-center gap-12 border-t pt-24 text-center">
-        <h2 className="text-4xl font-black tracking-tight">Rimaniamo in Contatto</h2>
-        <div className="flex flex-wrap justify-center gap-12">
+      {/* Studio Gallery */}
+      <section className="space-y-12">
+        <div className="text-center space-y-4">
+          <h2 className="text-4xl font-black tracking-tight">Il Laboratorio</h2>
+          <p className="text-gray-500">Istantanee dal cuore del processo creativo.</p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-6 md:px-0">
+          {[2, 3, 4, 5, 7, 8, 12, 13].map((n) => (
+            <div key={n} className="relative aspect-square overflow-hidden rounded-2xl shadow-soft border border-white/5">
+              <Image src={`/photo${n}.png`} alt="Studio Detail" fill className="object-cover hover:scale-105 transition duration-500" />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Contact Footer */}
+      <section className="flex flex-col items-center gap-12 border-t border-white/10 pt-24 text-center px-6">
+        <h2 className="text-4xl font-black tracking-tight">Iniziamo un Viaggio Insieme</h2>
+        <div className="flex flex-wrap justify-center gap-12 text-gray-400">
           <div className="flex flex-col items-center gap-3">
             <Mail className="text-primary" size={32} />
-            <p className="font-bold">info@vistoria-artlab.it</p>
+            <p className="font-semibold text-lg text-white">ciao@vistoria.art</p>
           </div>
           <div className="flex flex-col items-center gap-3">
             <MapPin className="text-secondary" size={32} />
-            <p className="font-bold">Studio: Via Tortona 12, Milano</p>
+            <p className="font-semibold text-lg text-center text-white">Laboratorio: Napoli, Italia</p>
           </div>
         </div>
         <div className="flex gap-6">
-          <a href="#" className="rounded-full bg-white p-4 shadow-soft hover:scale-110 active:scale-90 transition">
-            <Instagram size={24} className="text-coral" />
-          </a>
-          <a href="#" className="rounded-full bg-white p-4 shadow-soft hover:scale-110 active:scale-90 transition">
-            <Facebook size={24} className="text-secondary" />
+          <a href="https://www.instagram.com/vistoria_art/" target="_blank" className="rounded-full bg-white/5 p-5 shadow-soft hover:scale-110 active:scale-90 transition border border-white/10">
+            <Instagram size={28} className="text-coral" />
           </a>
         </div>
       </section>

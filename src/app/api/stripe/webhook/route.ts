@@ -21,18 +21,24 @@ export async function POST(req: Request) {
     const items = JSON.parse(session.metadata.cart);
 
     // Create Order in DB
+    const orderNumber = `ORD-${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
+
     const order = await prisma.order.create({
       data: {
+        orderNumber,
         totalCents: session.amount_total,
         currency: session.currency,
         status: 'PAID',
-        userEmail: session.customer_details.email,
+        customerEmail: session.customer_details.email,
+        customerName: session.customer_details.name,
         stripeSessionId: session.id,
         items: {
           create: items.map((item: any) => ({
             productId: item.id,
             quantity: item.q,
-            priceCents: 0, // In a real app, fetch current price or use snapshot
+            titleSnapshot: item.title || 'Product',
+            skuSnapshot: item.sku || 'N/A',
+            priceCents: 0, // Should be passed in metadata or fetched
           }))
         }
       }

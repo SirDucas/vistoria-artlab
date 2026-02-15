@@ -1,7 +1,8 @@
 import { auth, signOut } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { LayoutDashboard, ShoppingBag, Users, Settings, LogOut, Package } from 'lucide-react';
+import { LogOut } from 'lucide-react';
+import { SidebarNav } from '@/components/admin/sidebar-nav';
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
@@ -14,22 +15,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <div className="flex h-16 items-center px-6 border-b border-white/10">
           <Link href="/admin" className="text-xl font-black text-primary">Admin <span className="text-secondary">Lab</span></Link>
         </div>
-        <nav className="p-4 space-y-2">
-          <Link href="/admin" className="flex items-center gap-3 rounded-xl bg-primary/10 px-4 py-3 text-primary font-bold">
-            <LayoutDashboard size={20} /> Dashboard
-          </Link>
-          <Link href="/admin/products" className="flex items-center gap-3 rounded-xl px-4 py-3 text-gray-400 hover:bg-white/5 hover:text-white font-medium transition">
-            <Package size={20} /> Prodotti
-          </Link>
-          <Link href="/admin/orders" className="flex items-center gap-3 rounded-xl px-4 py-3 text-gray-400 hover:bg-white/5 hover:text-white font-medium transition">
-            <ShoppingBag size={20} /> Ordini
-          </Link>
-          <div className="pt-8 mt-8 border-t border-white/10">
-            <Link href="/admin/settings" className="flex items-center gap-3 rounded-xl px-4 py-3 text-gray-400 hover:bg-white/5 hover:text-white font-medium transition">
-              <Settings size={20} /> Impostazioni
-            </Link>
-          </div>
-        </nav>
+        <SidebarNav />
       </aside>
 
       {/* Main Content */}

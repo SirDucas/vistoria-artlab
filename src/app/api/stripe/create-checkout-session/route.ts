@@ -1,3 +1,4 @@
+import { prisma } from '@/lib/prisma';
 import { stripe } from '@/lib/stripe';
 import { z } from 'zod';
 
@@ -14,6 +15,17 @@ const bodySchema = z.object({
 
 export async function POST(req: Request) {
   try {
+    // Check if DB is reachable before anything else
+    try {
+      await prisma.$queryRaw`SELECT 1`;
+    } catch (dbError) {
+      console.error('Database connection error during checkout:', dbError);
+      return Response.json(
+        { error: 'Servizio temporaneamente non disponibile. Riprova tra pochi istanti.' },
+        { status: 503 }
+      );
+    }
+
     const json = await req.json();
     const parsed = bodySchema.safeParse(json);
     if (!parsed.success) return Response.json({ error: 'Invalid payload' }, { status: 400 });

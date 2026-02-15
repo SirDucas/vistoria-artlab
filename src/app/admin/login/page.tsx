@@ -56,7 +56,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@vistoria.it"
-                className="w-full rounded-xl border border-gray-200 bg-white/50 pl-11 pr-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition"
+                className="w-full rounded-xl border border-gray-200 bg-white/50 pl-11 pr-4 py-3 text-black placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition"
               />
             </div>
           </div>
@@ -71,7 +71,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-xl border border-gray-200 bg-white/50 pl-11 pr-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition"
+                className="w-full rounded-xl border border-gray-200 bg-white/50 pl-11 pr-4 py-3 text-black placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition"
               />
             </div>
           </div>

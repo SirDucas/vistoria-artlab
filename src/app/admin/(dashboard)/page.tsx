@@ -26,52 +26,52 @@ export default async function AdminDashboardPage() {
       {/* Stats Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((item) => (
-          <div key={item.label} className="rounded-soft-xl bg-white p-6 shadow-sm border border-gray-100 space-y-4">
+          <div key={item.label} className="rounded-soft-xl bg-white/5 p-6 shadow-glass border border-white/10 space-y-4 backdrop-blur-sm">
             <div className={`h-12 w-12 rounded-xl flex items-center justify-center ${item.color}`}>
               <item.icon size={24} />
             </div>
             <div>
               <p className="text-sm font-bold text-gray-500 uppercase tracking-wider">{item.label}</p>
-              <h3 className="text-2xl font-black">{item.value}</h3>
+              <h3 className="text-2xl font-black text-white">{item.value}</h3>
             </div>
           </div>
         ))}
       </div>
 
       {/* Recent Orders */}
-      <div className="rounded-soft-xl border border-gray-100 bg-white shadow-sm overflow-hidden">
-        <div className="border-b px-6 py-4 flex items-center justify-between">
-          <h2 className="text-xl font-bold">Ultimi Ordini</h2>
+      <div className="rounded-soft-xl border border-white/10 bg-white/5 shadow-glass overflow-hidden backdrop-blur-sm">
+        <div className="border-b border-white/10 px-6 py-4 flex items-center justify-between">
+          <h2 className="text-xl font-bold text-white">Ultimi Ordini</h2>
           <Link href="/admin/orders" className="text-sm font-bold text-primary hover:underline">Vedi Tutti</Link>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-gray-50 text-xs font-bold uppercase tracking-widest text-gray-400">
+            <thead className="bg-white/5 text-xs font-bold uppercase tracking-widest text-gray-400">
               <tr>
-                <th className="px-6 py-4">ID Ordine</th>
-                <th className="px-6 py-4">Cliente</th>
-                <th className="px-6 py-4">Stato</th>
-                <th className="px-6 py-4">Totale</th>
-                <th className="px-6 py-4">Data</th>
+                <th className="px-6 py-4 border-b border-white/10">ID Ordine</th>
+                <th className="px-6 py-4 border-b border-white/10">Cliente</th>
+                <th className="px-6 py-4 border-b border-white/10">Stato</th>
+                <th className="px-6 py-4 border-b border-white/10">Totale</th>
+                <th className="px-6 py-4 border-b border-white/10">Data</th>
               </tr>
             </thead>
-            <tbody className="divide-y text-sm">
+            <tbody className="divide-y divide-white/10 text-sm">
               {recentOrders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-50/50 transition">
-                  <td className="px-6 py-4 font-mono text-gray-400">#{order.id.slice(-8)}</td>
-                  <td className="px-6 py-4 font-bold">{order.customerEmail}</td>
+                <tr key={order.id} className="hover:bg-white/5 transition group">
+                  <td className="px-6 py-4 font-mono text-gray-500">#{order.id.slice(-8)}</td>
+                  <td className="px-6 py-4 font-bold text-gray-200">{order.customerEmail}</td>
                   <td className="px-6 py-4">
                     <span className={`rounded-full px-2 py-1 text-[10px] font-black uppercase tracking-wider ${order.status === 'PAID' ? 'bg-mint/10 text-mint' : 'bg-sun/10 text-sun'}`}>
                       {order.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4 font-black">€ {(order.totalCents / 100).toFixed(2)}</td>
-                  <td className="px-6 py-4 text-gray-500">{new Date(order.createdAt).toLocaleDateString()}</td>
+                  <td className="px-6 py-4 font-black text-white">€ {(order.totalCents / 100).toFixed(2)}</td>
+                  <td className="px-6 py-4 text-gray-400">{new Date(order.createdAt).toLocaleDateString()}</td>
                 </tr>
               ))}
               {recentOrders.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-6 py-10 text-center text-gray-400 font-medium">Nessun ordine presente.</td>
+                  <td colSpan={5} className="px-6 py-10 text-center text-gray-500 font-medium italic">Nessun ordine presente.</td>
                 </tr>
               )}
             </tbody>

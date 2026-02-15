@@ -17,7 +17,9 @@ export default async function AboutPage() {
         <div className="absolute inset-0 flex items-center justify-center text-center text-white p-6">
           <div className="max-w-3xl space-y-6">
             <h1 className="text-6xl font-black tracking-tighter md:text-8xl">La mia <span className="text-sun">Storia</span>.</h1>
-            <p className="text-xl font-medium opacity-90 md:text-2xl italic">"Dal corpo alla materia, ogni creazione è un respiro."</p>
+            <p className="text-xl font-medium opacity-90 md:text-2xl italic">
+              "<span className="bg-artistic-gradient bg-clip-text text-transparent font-black">Dal corpo alla materia</span>, ogni creazione è un respiro."
+            </p>
           </div>
         </div>
       </section>
@@ -30,7 +32,7 @@ export default async function AboutPage() {
             Artista e Arteterapeuta radicata nel calore creativo di Napoli.
           </p>
           <p>
-            Vistoria ArtLab è il punto d'incontro tra il mio percorso personale e la materia che prende vita. Nel mio laboratorio a Napoli, esploro il confine tra arte visiva e benessere interiore. La mia filosofia, **"dal corpo alla materia"**, nasce dalla convinzione che ogni gesto creativo sia un'estensione del nostro essere, un modo per dare forma a ciò che spesso non ha parole.
+            Vistoria ArtLab è il punto d'incontro tra il mio percorso personale e la materia che prende vita. Nel mio laboratorio a Napoli, esploro il confine tra arte visiva e benessere interiore. La mia filosofia, <span className="text-white font-black italic underline decoration-primary/50 underline-offset-4">"dal corpo alla materia"</span>, nasce dalla convinzione che ogni gesto creativo sia un'estensione del nostro essere, un modo per dare forma a ciò che spesso non ha parole.
           </p>
           <p>
             Oltre alla creazione di opere originali e oggetti d'arte su commissione, dedico una parte fondamentale della mia attività all'**arteterapia**. Accompagno le persone in percorsi di riscoperta attraverso l'uso consapevole del colore e dei materiali, trasformando l'atto del creare in un momento di cura e ascolto profondo.

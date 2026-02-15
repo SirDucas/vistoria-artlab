@@ -22,6 +22,12 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 export async function DELETE(_: Request, { params }: { params: { id: string } }) {
   const session = await auth();
   if (!session?.user?.isAdmin) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-  await prisma.product.delete({ where: { id: params.id } });
+
+  // Logical delete: set isDeleted to true
+  await prisma.product.update({
+    where: { id: params.id },
+    data: { isDeleted: true }
+  });
+
   return Response.json({ ok: true });
 }

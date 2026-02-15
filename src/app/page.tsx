@@ -6,6 +6,7 @@ import Image from 'next/image';
 
 export default async function HomePage() {
   const featured = await prisma.product.findMany({
+    where: { isDeleted: false },
     include: { images: true },
     take: 8,
     orderBy: { createdAt: 'desc' }
@@ -26,7 +27,7 @@ export default async function HomePage() {
   return (
     <div className="space-y-24 pb-20">
       {/* New Hero Section with Horizontal Background */}
-      <section className="relative h-[80vh] w-full overflow-hidden rounded-soft-xl bg-black">
+      <section className="relative h-[85vh] w-full overflow-hidden rounded-soft-xl bg-black">
         <Image
           src="/images/laboratorio/photo6.png"
           alt="Laboratory Hero"
@@ -34,21 +35,18 @@ export default async function HomePage() {
           className="object-cover opacity-60"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent" />
         <div className="relative h-full flex flex-col items-center justify-center text-center px-6">
-          <div className="inline-block rounded-full bg-primary/10 border border-primary/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-primary mb-8">
-            Napoli, Italia
-          </div>
-          <h1 className="text-6xl font-black leading-[1.1] tracking-tighter text-white lg:text-9xl mb-8">
+          <h1 className="text-6xl font-black leading-[1.1] tracking-tighter text-white lg:text-[10rem] mb-12">
             Dal corpo <br />
             <span className="bg-artistic-gradient bg-clip-text text-transparent italic">alla materia.</span>
           </h1>
-          <p className="text-xl font-medium max-w-2xl leading-relaxed text-gray-300 mb-12">
+          <p className="text-xl font-medium max-w-2xl leading-relaxed text-gray-300 mb-16">
             Vittoria Laboccetta crea opere su commissione e ti accompagna attraverso il potere trasformativo dell’arteterapia. Nel cuore di Napoli, dove l’arte incontra la cura.
           </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/shop" className="btn-primary px-10 py-4 text-lg">Esplora la Galleria</Link>
-            <Link href="/about" className="rounded-full border border-white/20 bg-white/5 backdrop-blur-sm px-10 py-4 text-lg font-bold transition hover:bg-white/10">La mia storia</Link>
+          <div className="flex flex-wrap gap-6 justify-center">
+            <Link href="/shop" className="btn-primary px-12 py-5 text-xl">Esplora la Galleria</Link>
+            <Link href="/about" className="rounded-full border border-white/20 bg-white/5 backdrop-blur-sm px-12 py-5 text-xl font-bold transition hover:bg-white/10">La mia storia</Link>
           </div>
         </div>
       </section>

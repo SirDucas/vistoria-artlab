@@ -3,6 +3,18 @@ import { prisma } from '@/lib/prisma';
 import { productSchema } from '@/lib/validators';
 import { slugify } from '@/lib/utils';
 
+export async function GET() {
+  const session = await auth();
+  if (!session?.user?.isAdmin) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const products = await prisma.product.findMany({
+    where: { isDeleted: false },
+    include: { images: true },
+    orderBy: { createdAt: 'desc' }
+  });
+  return Response.json(products);
+}
+
 export async function POST(req: Request) {
   const session = await auth();
   if (!session?.user?.isAdmin) return Response.json({ error: 'Unauthorized' }, { status: 401 });

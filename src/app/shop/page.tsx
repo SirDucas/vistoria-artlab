@@ -15,6 +15,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Record<
   const max = Number(searchParams.max || 999999);
 
   const where = {
+    isDeleted: false,
     ...(category ? { category } : {}),
     ...(availability ? { availability: availability as any } : {}),
     ...(tag ? { tags: { has: tag } } : {}),
@@ -29,7 +30,11 @@ export default async function ShopPage({ searchParams }: { searchParams: Record<
     prisma.product.count({ where })
   ]);
 
-  const categories = await prisma.product.findMany({ select: { category: true }, distinct: ['category'] });
+  const categories = await prisma.product.findMany({
+    where: { isDeleted: false },
+    select: { category: true },
+    distinct: ['category']
+  });
 
   return (
     <div className="space-y-12 pb-20">

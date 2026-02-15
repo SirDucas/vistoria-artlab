@@ -11,7 +11,11 @@ export function Footer() {
       <p className="font-medium">
         © {new Date().getFullYear()} Vistoria ArtLab · Creato con cura a <span className="text-secondary font-bold">Napoli</span>
       </p>
-      <p className="mt-2 text-xs opacity-40 italic">"dal corpo alla materia"</p>
+      <p className="mt-2 text-xs opacity-60">
+        <span className="italic font-bold">"</span>
+        <span className="text-primary italic font-black uppercase tracking-widest">dal corpo alla materia</span>
+        <span className="italic font-bold">"</span>
+      </p>
     </footer>
   );
 }

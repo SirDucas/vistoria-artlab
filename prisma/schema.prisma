@@ -55,6 +55,7 @@ model Product {
   availability  Availability  @default(IN_STOCK)
   quantity      Int           @default(1)
   isUniquePiece Boolean       @default(true)
+  isDeleted     Boolean       @default(false)
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   images        ProductImage[]

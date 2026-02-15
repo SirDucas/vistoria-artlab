@@ -7,8 +7,11 @@ import { ProductCard } from '@/components/shop/product-card';
 import { Ruler, Sparkles, Box, Info } from 'lucide-react';
 
 export default async function ProductPage({ params }: { params: { slug: string } }) {
-  const product = await prisma.product.findUnique({
-    where: { slug: params.slug },
+  const product = await prisma.product.findFirst({
+    where: {
+      slug: params.slug,
+      isDeleted: false
+    },
     include: { images: true }
   });
 
@@ -17,7 +20,8 @@ export default async function ProductPage({ params }: { params: { slug: string }
   const related = await prisma.product.findMany({
     where: {
       category: product.category,
-      id: { not: product.id }
+      id: { not: product.id },
+      isDeleted: false
     },
     include: { images: true },
     take: 4
